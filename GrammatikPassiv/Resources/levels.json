@@ -1,0 +1,37 @@
+[
+    {
+        "LevelID": 1,
+        "LevelName": "LEVEL A1",
+        "LevelStatus": false,
+        "LevelDescription": "Learn German For Beginners!",
+        "LevelMixedName": "Mixed All Exercises Level A1"
+    },
+    {
+        "LevelID": 2,
+        "LevelName": "LEVEL A2",
+        "LevelStatus": false,
+        "LevelDescription": "German for Advanced Beginners",
+        "LevelMixedName": "Mixed All Exercises Level A2"
+    },
+    {
+        "LevelID": 3,
+        "LevelName": "LEVEL B1",
+        "LevelStatus": false,
+        "LevelDescription": "Courses Intermediate German",
+        "LevelMixedName": "Mixed All Exercises Level B1"
+    },
+    {
+        "LevelID": 4,
+        "LevelName": "LEVEL B2",
+        "LevelStatus": false,
+        "LevelDescription": "Courses Upper Intermediate",
+        "LevelMixedName": "Mixed All Exercises Level B2"
+    },
+    {
+        "LevelID": 5,
+        "LevelName": "Special Topics",
+        "LevelStatus": false,
+        "LevelDescription": "Courses Advanced Special Topics",
+        "LevelMixedName": "Mixed All Exercises Special Topics"
+    }
+]

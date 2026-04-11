@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct GrammatikPassivApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LevelView()
         }
+        .modelContainer(for: [TopicModel.self, LevelsModel.self, ExerciseModel.self, ExamModel.self])
     }
 }
