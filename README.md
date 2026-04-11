@@ -1,6 +1,6 @@
 # grammatik-passiv
 
-Learn German grammar with lots of practice questions!
+An iOS App to learn German grammar with lots of practice questions!
 
 <img width="250" height="545" alt="image" src="https://github.com/user-attachments/assets/2a40beca-da92-4eef-bc8e-31360922f9d6" />
 
