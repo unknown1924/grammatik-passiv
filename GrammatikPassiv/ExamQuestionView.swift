@@ -148,7 +148,6 @@ struct ExamQuestionView: View {
     private func questionCard(exam: ExamModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Label("\(currentIndex + 1)", systemImage: "questionmark.circle.fill")
-//            Text("Question \(currentIndex + 1)")
                 .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 5)
