@@ -19,6 +19,7 @@ struct ExamQuestionView: View {
     @Query var exercise: [ExerciseModel]
     @State var correctStatus: Bool = false
     @State var answerStatus: Bool = false
+    @State private var showExitAlert = false
 
     // Internal state
     @State private var currentIndex: Int = 0
@@ -102,19 +103,35 @@ struct ExamQuestionView: View {
             }
         }
     }
+    
+    private var dismissView: some View {
+        Button {
+            showExitAlert = true
+        } label: {
+            Image(systemName: "xmark")
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .frame(width: 36, height: 36)
+                .background(Color(.systemGray5), in: Circle())
+        }
+        .alert("Exit exercise?", isPresented: $showExitAlert) {
+            Button("No", role: .cancel) {
+                showExitAlert = false
+            }
+            Button("Yes", role: .destructive) {
+                dismiss()
+            }
+        } message: {
+            Text("All your progress will be lost.")
+        }
+    }
 
     private var topBar: some View {
         VStack(spacing: 14) {
             HStack(spacing: 14) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .frame(width: 36, height: 36)
-                        .background(Color(.systemGray5), in: Circle())
-                }
+                
+                // Dismiss alert
+                dismissView
 
                 // Progress bar
                 GeometryReader { geo in
