@@ -28,7 +28,7 @@ struct LevelView: View {
                     }
                 }
             }
-            .navigationTitle("Grammatik Passiv")
+            .navigationTitle("All Levels")
             .onAppear { DatabaseManager.seedLevelData(context: context) }
             .navigationDestination(for: LevelsModel.self) { level in
                 TopicView(currentLevelId: level.id, currentLevelName: level.name)

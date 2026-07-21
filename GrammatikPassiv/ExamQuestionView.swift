@@ -16,6 +16,7 @@ struct ExamQuestionView: View {
     @State var currentTopicName: String = "Questions"
     @State var currentTopicId: Int = 0
     @Query(sort: \ExamModel.id) var exams: [ExamModel]
+    @Query var exercise: [ExerciseModel]
     @State var correctStatus: Bool = false
     @State var answerStatus: Bool = false
 
@@ -31,7 +32,12 @@ struct ExamQuestionView: View {
             exam.examId == currentTopicId
         }
         
+        let exfilter = #Predicate<ExerciseModel> { ex in
+            ex.id == currentTopicId
+        }
+        
         _exams = Query(filter: filter, sort: \ExamModel.id)
+        _exercise = Query(filter: exfilter)
     }
     
     private var currentExam: ExamModel? {
@@ -147,7 +153,14 @@ struct ExamQuestionView: View {
     // MARK: - Question Card
     private func questionCard(exam: ExamModel) -> some View {
         VStack(alignment: .leading, spacing: 12) {
+            if exam.status {
+                Text("You've already attempted this question.")
+            }
+            if exercise.count >= 1 {
+                Text("Exercise ID: \(exercise[0].id)")
+            }
             Label("\(currentIndex + 1)", systemImage: "questionmark.circle.fill")
+//            Text("Question \(currentIndex + 1)")
                 .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 5)
@@ -290,6 +303,7 @@ struct ExamQuestionView: View {
 
                     Button {
                         advanceToNext()
+                        exam.status = true
                     } label: {
                         Text(correctStatus ? "Continue" : "Skip")
                             .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -329,9 +343,21 @@ struct ExamQuestionView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+            
+            Spacer()
+            
+            Button("Done") {
+                dismiss()
+            }
+            .buttonStyle(.glassProminent)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 60)
+        .onAppear {
+            if exercise.count >= 1 {
+                exercise[0].status = true
+            }
+        }
     }
 
     // MARK: - Helpers

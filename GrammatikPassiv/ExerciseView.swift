@@ -14,6 +14,7 @@ struct ExerciseView: View {
 
     @State var currentTopicId: Int
     @State var currentTopicName: String
+    @State var status: Bool = false
     
     init(currentTopicId: Int, currentTopicName: String) {
         let filter = #Predicate<ExerciseModel> { exercise in
@@ -28,12 +29,15 @@ struct ExerciseView: View {
     var body: some View {
         List(exercises.indices, id: \.self) { index in
             NavigationLink(value: exercises[index]) {
-                Text("Übung \(index+1)")
-                    .font(.title3)
+//                Text("Übung \(index+1)")
+//                    .font(.title3)
+                Label("Übung \(index+1)", systemImage: exercises[index].status ? "checkmark.circle.fill" : "circle")
             }
         }
         .navigationTitle(currentTopicName)
-        .onAppear { DatabaseManager.seedExerciseData(context: context) }
+        .onAppear {
+            DatabaseManager.seedExerciseData(context: context)
+        }
     }
 }
 
@@ -44,5 +48,5 @@ struct ExerciseView: View {
                 ExamQuestionView(currentTopicId: exercise.id)
             }
     }
-    .modelContainer(for: [ExerciseModel.self, ExamModel.self])
+    .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
 }

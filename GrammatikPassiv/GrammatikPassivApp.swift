@@ -12,7 +12,7 @@ import SwiftData
 struct GrammatikPassivApp: App {
     var body: some Scene {
         WindowGroup {
-            LevelView()
+            MainTabView()
         }
         .modelContainer(for: [TopicModel.self, LevelsModel.self, ExerciseModel.self, ExamModel.self])
     }
