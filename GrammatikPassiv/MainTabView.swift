@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import FirebaseAuthSwiftUI
+import FirebaseGoogleSwiftUI
 
 struct MainTabView: View {
     let authService: AuthService
@@ -16,6 +17,7 @@ struct MainTabView: View {
         let configuration = AuthConfiguration()
         authService = AuthService(configuration: configuration)
             .withEmailSignIn()
+            .withGoogleSignIn()
     }
     
     @State var path = NavigationPath()

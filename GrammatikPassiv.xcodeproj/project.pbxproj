@@ -16,9 +16,22 @@
 		4F37DC312F5AFA75004ED2AC /* GrammatikPassiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrammatikPassiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F89BFC9301151F700DB15AF /* Exceptions for "GrammatikPassiv" folder in "GrammatikPassiv" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4F37DC302F5AFA75004ED2AC /* GrammatikPassiv */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F37DC332F5AFA75004ED2AC /* GrammatikPassiv */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4F89BFC9301151F700DB15AF /* Exceptions for "GrammatikPassiv" folder in "GrammatikPassiv" target */,
+			);
 			path = GrammatikPassiv;
 			sourceTree = "<group>";
 		};
@@ -278,6 +291,7 @@
 				DEVELOPMENT_TEAM = 86TN24DRGD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GrammatikPassiv/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -310,6 +324,7 @@
 				DEVELOPMENT_TEAM = 86TN24DRGD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GrammatikPassiv/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
