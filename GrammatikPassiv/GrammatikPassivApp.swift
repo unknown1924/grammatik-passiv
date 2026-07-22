@@ -24,7 +24,7 @@ struct GrammatikPassivApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            AuthenticationView()
         }
         .modelContainer(for: [TopicModel.self, LevelsModel.self, ExerciseModel.self, ExamModel.self])
     }
