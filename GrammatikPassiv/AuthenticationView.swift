@@ -29,40 +29,17 @@ struct AuthenticationView: View {
     }
 
     var authenticatedContent: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
+            VStack {
                 if authService.authenticationState == .authenticated {
-
-                    // TODO: Move this account management to a profiles page
-                    HStack {
-                        Button("Manage Account") {
-                            authService.isPresented = true
-                        }
-                        .buttonStyle(.bordered)
-
-                        Button("Sign Out") {
-                            Task {
-                                try? await authService.signOut()
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-
                     MainTabView()
                 } else {
-                    Button("Sign In") {
-                        authService.isPresented = true
-                    }
-                    .buttonStyle(.borderedProminent)
+                    Button("Sign In") { authService.isPresented = true }
                 }
             }
-            .navigationTitle("Grammatik Passiv")
-        }
-        .onChange(of: authService.authenticationState) { _, newValue in
-            // Automatically show auth UI when not authenticated
-            if newValue != .authenticating {
-                authService.isPresented = (newValue == .unauthenticated)
-            }
+            .onChange(of: authService.authenticationState) { _, newValue in
+                if newValue != .authenticating {
+                    authService.isPresented = (newValue == .unauthenticated)
+                }
         }
     }
 }
