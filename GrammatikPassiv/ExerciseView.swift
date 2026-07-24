@@ -65,5 +65,6 @@ struct ExerciseView: View {
                 ExamQuestionView(currentTopicId: exercise.id)
             }
     }
+    .environment(ExerciseProgressManager())
     .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
 }

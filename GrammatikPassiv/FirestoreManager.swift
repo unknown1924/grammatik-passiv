@@ -48,7 +48,7 @@ class FirestoreManager {
 class ExerciseProgressManager {
     var progress: [Exercise] = []
     
-    let collectionName = "questions"
+    let collectionName = "progress"
 
     func loadProgressContext(context: ModelContext) {
         Task {

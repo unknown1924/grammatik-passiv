@@ -517,5 +517,6 @@ struct OptionCell: View {
     NavigationStack {
         ExamQuestionView(currentTopicId: 7)
     }
+    .environment(ExerciseProgressManager())
     .modelContainer(for: [ExamModel.self])
 }
