@@ -10,12 +10,12 @@ import SwiftData
 
 struct ExerciseView: View {
     @Environment(\.modelContext) private var context
+    @Environment(ExerciseProgressManager.self) private var progressManager
     @Query(sort: \ExerciseModel.id) var exercises: [ExerciseModel]
 
     @State var currentTopicId: Int
     @State var currentTopicName: String
     @State var status: Bool = false
-    @State private var progressManager = ExerciseProgressManager()
 
     init(currentTopicId: Int, currentTopicName: String) {
         let filter = #Predicate<ExerciseModel> { exercise in
@@ -36,7 +36,7 @@ struct ExerciseView: View {
         .navigationTitle(currentTopicName)
         // TODO: make db seeding async op, use .task {}
         .onAppear {
-            DatabaseManager.seedExerciseData(context: context)
+            DatabaseManager.seedExerciseData(context: context, progressManager)
         }
         // TODO: toolbar here is only for testing for delete/load swiftdata
         .toolbar {
@@ -52,7 +52,7 @@ struct ExerciseView: View {
             }
             
             Button("Load", systemImage: "arrow.trianglehead.2.clockwise.rotate.90") {
-                DatabaseManager.seedExerciseData(context: context)
+                DatabaseManager.seedExerciseData(context: context, progressManager)
             }
         }
     }

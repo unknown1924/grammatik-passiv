@@ -12,6 +12,7 @@ import SwiftData
 struct ExamQuestionView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
+    @Environment(ExerciseProgressManager.self) private var progressManager
     
     @State var currentTopicName: String = "Questions"
     @State var currentTopicId: Int = 0
@@ -20,7 +21,6 @@ struct ExamQuestionView: View {
     @State var correctStatus: Bool = false
     @State var answerStatus: Bool = false
     @State private var showExitAlert = false
-    @State private var progressManager = ExerciseProgressManager()
 
     // Internal state
     @State private var currentIndex: Int = 0

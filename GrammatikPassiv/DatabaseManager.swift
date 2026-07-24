@@ -74,7 +74,7 @@ class DatabaseManager {
         }
     }
 
-    static func seedExerciseData(context: ModelContext) {
+    static func seedExerciseData(context: ModelContext, _ progressManager: ExerciseProgressManager) {
         let fetchDescriptor = FetchDescriptor<ExerciseModel>()
         let existingCount = (try? context.fetchCount(fetchDescriptor)) ?? 0
         
@@ -97,8 +97,7 @@ class DatabaseManager {
         } catch {
             print("Failed to decode and seed exerise JSON: \(error)")
         }
-        // Move this class instance to .environment
-        ExerciseProgressManager().loadProgressContext(context: context)
+        progressManager.loadProgressContext(context: context)
     }
     
     static func seedExamData(context: ModelContext) {
