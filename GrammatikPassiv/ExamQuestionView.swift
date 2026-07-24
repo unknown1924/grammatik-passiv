@@ -96,6 +96,7 @@ struct ExamQuestionView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.82), value: showSheet)
         .animation(.spring(response: 0.3, dampingFraction: 0.75), value: selectedOption)
         .navigationBarHidden(true)
+        .toolbar(.hidden, for: .tabBar)
         .onAppear {
             Task {
                 // MARK: Implement Loading spinner
@@ -110,7 +111,7 @@ struct ExamQuestionView: View {
         } label: {
             Image(systemName: "xmark")
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.green)
                 .frame(width: 36, height: 36)
                 .background(Color(.systemGray5), in: Circle())
         }
