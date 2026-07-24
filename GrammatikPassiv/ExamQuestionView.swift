@@ -20,6 +20,7 @@ struct ExamQuestionView: View {
     @State var correctStatus: Bool = false
     @State var answerStatus: Bool = false
     @State private var showExitAlert = false
+    @State private var progressManager = ExerciseProgressManager()
 
     // Internal state
     @State private var currentIndex: Int = 0
@@ -374,6 +375,15 @@ struct ExamQuestionView: View {
             if exercise.count >= 1 {
                 exercise[0].status = true
             }
+        }
+        .task {
+            let updatedExercise = Exercise(id: exercise[0].id,
+                                           name: exercise[0].name,
+                                           status: exercise[0].status,
+                                           topicId: exercise[0].topicId)
+            
+            // Update after every exercise completion
+            progressManager.updateExerciseProgress(exercise: updatedExercise)
         }
     }
 

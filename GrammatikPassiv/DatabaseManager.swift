@@ -97,6 +97,8 @@ class DatabaseManager {
         } catch {
             print("Failed to decode and seed exerise JSON: \(error)")
         }
+        // Move this class instance to .environment
+        ExerciseProgressManager().loadProgressContext(context: context)
     }
     
     static func seedExamData(context: ModelContext) {

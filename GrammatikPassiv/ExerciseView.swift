@@ -15,7 +15,8 @@ struct ExerciseView: View {
     @State var currentTopicId: Int
     @State var currentTopicName: String
     @State var status: Bool = false
-    
+    @State private var progressManager = ExerciseProgressManager()
+
     init(currentTopicId: Int, currentTopicName: String) {
         let filter = #Predicate<ExerciseModel> { exercise in
             exercise.topicId == currentTopicId
@@ -29,14 +30,30 @@ struct ExerciseView: View {
     var body: some View {
         List(exercises.indices, id: \.self) { index in
             NavigationLink(value: exercises[index]) {
-//                Text("Übung \(index+1)")
-//                    .font(.title3)
                 Label("Übung \(index+1)", systemImage: exercises[index].status ? "checkmark.circle.fill" : "circle")
             }
         }
         .navigationTitle(currentTopicName)
+        // TODO: make db seeding async op, use .task {}
         .onAppear {
             DatabaseManager.seedExerciseData(context: context)
+        }
+        // TODO: toolbar here is only for testing for delete/load swiftdata
+        .toolbar {
+            Button("Delete", systemImage: "trash.fill") {
+                do {
+                    print("deleting...")
+                    try context.delete(model: ExerciseModel.self)
+                    try context.save()
+                    print("done!")
+                } catch {
+                    print(error)
+                }
+            }
+            
+            Button("Load", systemImage: "arrow.trianglehead.2.clockwise.rotate.90") {
+                DatabaseManager.seedExerciseData(context: context)
+            }
         }
     }
 }
