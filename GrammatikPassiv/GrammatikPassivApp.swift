@@ -28,6 +28,6 @@ struct GrammatikPassivApp: App {
             AuthenticationView()
         }
         .environment(progressManager)
-        .modelContainer(for: [TopicModel.self, LevelsModel.self, ExerciseModel.self, ExamModel.self])
+        .modelContainer(previewContainer)
     }
 }

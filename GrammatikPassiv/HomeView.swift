@@ -50,9 +50,10 @@ struct MainContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    StreakView()
-                        .padding(.horizontal) // Add padding for better layout
-
+//                    StreakView()
+//                        .padding(.horizontal) // Add padding for better layout
+                    StreakCalendarView()
+                    
                     Divider()
                         .padding(.horizontal) // Add padding for better layout
                     
@@ -179,5 +180,6 @@ struct LevelSelectionView: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }

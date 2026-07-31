@@ -46,25 +46,32 @@ class FirestoreManager {
 @Observable
 @MainActor
 class ExerciseProgressManager {
-    var progress: [Exercise] = []
     
-    let collectionName = "progress"
+    var exerciseProgress: [Exercise] = []
+    var dailyActivity: [DailyActivity] = []
+    // TODO: looks ugly - can something be done about this
+    var streakSummary: StreakSummary = StreakSummary(id: 0, currentStreak: 0, longestStreak: 0, lastActivityDateKey: "2026-07-29", freezesAvailable: 0, updatedAt: .now)
+    
+    let exerciseProgressCollectionName = "exerciseProgress"
+    let dailyActivityCollectionName = "dailyActivity"
+    let streakSummaryCollectionName = "streakSummary"
 
-    func loadProgressContext(context: ModelContext) {
+    let formatter = DateFormatter()
+    
+    func fetchExerciseProgress(context: ModelContext) {
         Task {
             do {
                 // fetch progress from Firestore
-                self.progress = try await FirestoreManager.shared.fetchDocuments(collection: collectionName)
+                self.exerciseProgress = try await FirestoreManager.shared.fetchDocuments(collection: exerciseProgressCollectionName)
             } catch {
                 print("Failed to fetch progress from Firestore: \(error.localizedDescription)")
             }
             
             // TODO: Move this update swiftdata
-            // update local swiftdata using progress data
             do {
-                for p in progress {
-                    let temp = ExerciseModel(from: p)
-                    context.insert(temp)
+                for progress in exerciseProgress {
+                    let model = ExerciseModel(from: progress)
+                    context.insert(model)
                 }
                 try context.save()
             } catch {
@@ -75,9 +82,67 @@ class ExerciseProgressManager {
     
     func updateExerciseProgress(exercise: Exercise) {
         do {
-            try FirestoreManager.shared.saveDocument(data: exercise, collection: collectionName, id: String(exercise.id))
+            try FirestoreManager.shared.saveDocument(data: exercise, collection: exerciseProgressCollectionName, id: String(exercise.id))
         } catch {
             print("Failed to save progress: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchDailyActivityProgress(context: ModelContext) {
+        formatter.dateFormat = "yyyy-MM-dd"
+        Task {
+            do {
+                self.dailyActivity = try await FirestoreManager.shared.fetchDocuments(collection: dailyActivityCollectionName)
+            } catch {
+                print(error)
+            }
+            
+            do {
+                for activity in dailyActivity {
+                    let model = DailyActivityModel(date: activity.date, completedQuizCount: activity.completedQuizCount, isFreezeUsed: activity.isFreezeUsed)
+                    context.insert(model)
+                }
+                try context.save()
+            } catch {
+                print("Failed to update exercise swiftdata: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func updateDailyActivityProgress(activity: DailyActivity) {
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        do {
+            try FirestoreManager.shared.saveDocument(data: activity, collection: dailyActivityCollectionName, id: formatter.string(from: activity.date))
+        } catch {
+            print("Failed to update daily activity progress - firestore: \(error.localizedDescription)")
+        }
+        
+    }
+
+    func fetchStreakSummary(context: ModelContext) {
+        Task {
+            do {
+                streakSummary = try await FirestoreManager.shared.fetchDocument(collection: streakSummaryCollectionName, id: "current")
+            } catch {
+                print("Failed to fetch streak summary - firestore: \(error.localizedDescription)")
+            }
+            
+            do {
+                let streakModel = StreakSummaryModel(currentStreak: streakSummary.currentStreak, longestStreak: streakSummary.longestStreak, freezesAvailable: streakSummary.freezesAvailable)
+                context.insert(streakModel)
+                try context.save()
+            } catch {
+                print("Failed to save streak summary - swiftdata: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func updateStreakSummary(streak: StreakSummary) {
+        do {
+            try FirestoreManager.shared.saveDocument(data: streak, collection: streakSummaryCollectionName, id: "current")
+        } catch {
+            print("Failed to update streak summary - firestore: \(error.localizedDescription)")
         }
     }
 }

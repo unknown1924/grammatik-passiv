@@ -97,7 +97,7 @@ class DatabaseManager {
         } catch {
             print("Failed to decode and seed exerise JSON: \(error)")
         }
-        progressManager.loadProgressContext(context: context)
+        progressManager.fetchExerciseProgress(context: context)
     }
     
     static func seedExamData(context: ModelContext) {
@@ -141,5 +141,73 @@ class DatabaseManager {
     func delete(topic: ExamModel, context: ModelContext) {
         context.delete(topic)
         try? context.save()
+    }
+    
+    // TODO: Do i need this?
+    static func fetchDailyActivityAndStreak(context: ModelContext) {
+        ExerciseProgressManager().fetchDailyActivityProgress(context: context)
+        ExerciseProgressManager().fetchStreakSummary(context: context)
+    }
+    
+    static func recordActivity(context: ModelContext) {
+        let today = Calendar.current.startOfDay(for: .now)
+        let todayKey = DailyActivityModel.formatter.string(from: today)
+
+        // Avoid duplicate entries for the same day
+        let descriptor = FetchDescriptor<DailyActivityModel>(
+            predicate: #Predicate { $0.dateKey == todayKey }
+        )
+        if let existing = try? context.fetch(descriptor), !existing.isEmpty {
+            return // already logged today
+        }
+
+        do {
+            let activity = DailyActivityModel(date: today)
+            context.insert(activity)
+            try context.save()
+        } catch {
+            print(error)
+        }
+
+        let progressManager = ExerciseProgressManager()
+        progressManager.fetchDailyActivityProgress(context: context)
+        updateStreak(context: context, today: today)
+    }
+
+    static func updateStreak(context: ModelContext, today: Date) {
+        let summaryDescriptor = FetchDescriptor<StreakSummaryModel>()
+        let summary = (try? context.fetch(summaryDescriptor))?.first ?? {
+            let s = StreakSummaryModel()
+            context.insert(s)
+            return s
+        }()
+        
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
+
+        let calendar = Calendar.current
+        if let lastKey = summary.lastActivityDateKey,
+           let lastDate = DailyActivityModel.formatter.date(from: lastKey) {
+            let daysBetween = calendar.dateComponents([.day], from: lastDate, to: today).day ?? 0
+            if daysBetween == 1 {
+                summary.currentStreak += 1
+            } else if daysBetween == 0 {
+                // same day, no-op
+            } else {
+                summary.currentStreak = 1 // streak broken, restart
+            }
+        } else {
+            summary.currentStreak = 1
+        }
+
+        summary.longestStreak = max(summary.longestStreak, summary.currentStreak)
+        summary.lastActivityDateKey = DailyActivityModel.formatter.string(from: today)
+        summary.updatedAt = .now
+        
+        // TODO: streakSummary saving to swiftdata then fetching from firestore - is this right?
+        ExerciseProgressManager().fetchStreakSummary(context: context)
     }
 }

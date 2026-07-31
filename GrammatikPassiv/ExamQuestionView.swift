@@ -372,18 +372,26 @@ struct ExamQuestionView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 60)
         .onAppear {
+            // update exercise progress in swiftdata
             if exercise.count >= 1 {
                 exercise[0].status = true
             }
         }
         .task {
+            // TODO: CLEAN UP
+            // update exercise progress in firestore
             let updatedExercise = Exercise(id: exercise[0].id,
                                            name: exercise[0].name,
                                            status: exercise[0].status,
                                            topicId: exercise[0].topicId)
             
-            // Update after every exercise completion
+            let daily = DailyActivity(id: 1, dateKey: "date", date: .now, completedQuizCount: 1, isFreezeUsed: false, createdAt: .now)
+            
+            // TODO: EDGE CASES HERE - FIX THIS
             progressManager.updateExerciseProgress(exercise: updatedExercise)
+            progressManager.updateDailyActivityProgress(activity: daily)
+            DatabaseManager.recordActivity(context: context)
+            DatabaseManager.updateStreak(context: context, today: .now)
         }
     }
 
@@ -518,5 +526,5 @@ struct OptionCell: View {
         ExamQuestionView(currentTopicId: 7)
     }
     .environment(ExerciseProgressManager())
-    .modelContainer(for: [ExamModel.self])
+    .modelContainer(previewContainer)
 }
