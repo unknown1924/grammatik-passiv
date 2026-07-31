@@ -10,6 +10,7 @@
 		4F89BEE73010044F00DB15AF /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEE63010044F00DB15AF /* FirebaseCore */; };
 		4F89BEED30100DAE00DB15AF /* FirebaseAuthSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEEC30100DAE00DB15AF /* FirebaseAuthSwiftUI */; };
 		4F89BEEF30100DAE00DB15AF /* FirebaseGoogleSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEEE30100DAE00DB15AF /* FirebaseGoogleSwiftUI */; };
+		4FA452303012053F00DA212F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA4522F3012053F00DA212F /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F89BEE73010044F00DB15AF /* FirebaseCore in Frameworks */,
+				4FA452303012053F00DA212F /* FirebaseFirestore in Frameworks */,
 				4F89BEEF30100DAE00DB15AF /* FirebaseGoogleSwiftUI in Frameworks */,
 				4F89BEED30100DAE00DB15AF /* FirebaseAuthSwiftUI in Frameworks */,
 			);
@@ -98,6 +100,7 @@
 				4F89BEE63010044F00DB15AF /* FirebaseCore */,
 				4F89BEEC30100DAE00DB15AF /* FirebaseAuthSwiftUI */,
 				4F89BEEE30100DAE00DB15AF /* FirebaseGoogleSwiftUI */,
+				4FA4522F3012053F00DA212F /* FirebaseFirestore */,
 			);
 			productName = GrammatikPassiv;
 			productReference = 4F37DC312F5AFA75004ED2AC /* GrammatikPassiv.app */;
@@ -404,6 +407,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4F89BEEB30100DAE00DB15AF /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
 			productName = FirebaseGoogleSwiftUI;
+		};
+		4FA4522F3012053F00DA212F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F89BEE43010034700DB15AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

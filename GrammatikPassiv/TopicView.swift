@@ -45,5 +45,6 @@ struct TopicView: View {
                 ExerciseView(currentTopicId: topic.id, currentTopicName: topic.name)
             }
     }
-    .modelContainer(for: [TopicModel.self, ExerciseModel.self])
+    .environment(ExerciseProgressManager())
+    .modelContainer(previewContainer)
 }

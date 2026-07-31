@@ -21,11 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct GrammatikPassivApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var progressManager = ExerciseProgressManager()
     
     var body: some Scene {
         WindowGroup {
             AuthenticationView()
         }
-        .modelContainer(for: [TopicModel.self, LevelsModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(progressManager)
+        .modelContainer(previewContainer)
     }
 }

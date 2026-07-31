@@ -77,5 +77,6 @@ extension String {
 
 #Preview {
     SearchView()
-        .modelContainer(for: [TopicModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }
