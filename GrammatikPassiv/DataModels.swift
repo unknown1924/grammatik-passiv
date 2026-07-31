@@ -177,3 +177,62 @@ final class ExamModel {
     }
 }
 
+@Model
+final class DailyActivityModel {
+    // .unique enforces one row per calendar day at the persistence layer,
+    // in addition to any "already logged today" check you do in code.
+    @Attribute(.unique) var dateKey: String   // "yyyy-MM-dd", local-day-normalized
+    var date: Date                             // start-of-day Date, for range queries
+    var completedQuizCount: Int
+    var isFreezeUsed: Bool
+    var createdAt: Date
+
+    init(date: Date, completedQuizCount: Int = 1, isFreezeUsed: Bool = false) {
+        let normalized = Calendar.current.startOfDay(for: date)
+        self.date = normalized
+        self.dateKey = DailyActivityModel.formatter.string(from: normalized)
+        self.completedQuizCount = completedQuizCount
+        self.isFreezeUsed = isFreezeUsed
+        self.createdAt = .now
+    }
+
+    static let formatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        f.calendar = Calendar(identifier: .gregorian)
+        return f
+    }()
+}
+
+struct DailyActivity: Hashable, Identifiable, Codable {
+    var id: Int
+    var dateKey: String
+    var date: Date
+    var completedQuizCount: Int
+    var isFreezeUsed: Bool
+    var createdAt: Date
+}
+
+@Model
+final class StreakSummaryModel {
+    var currentStreak: Int
+    var longestStreak: Int
+    var lastActivityDateKey: String?
+    var freezesAvailable: Int
+    var updatedAt: Date
+
+    init(currentStreak: Int = 0, longestStreak: Int = 0, freezesAvailable: Int = 0) {
+        self.currentStreak = currentStreak
+        self.longestStreak = longestStreak
+        self.freezesAvailable = freezesAvailable
+        self.updatedAt = .now
+    }
+}
+
+struct StreakSummary: Hashable, Identifiable, Codable {
+    var id: Int
+    var currentStreak: Int
+    var longestStreak: Int
+    var lastActivityDateKey: String?
+    var freezesAvailable: Int
+    var updatedAt: Date}

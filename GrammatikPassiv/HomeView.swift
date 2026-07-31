@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAuthSwiftUI
+import FirebaseGoogleSwiftUI
 
 struct HomeView: View {
     // Automatically persists the user's first-time state
@@ -33,19 +35,38 @@ struct HomeView: View {
 // MARK: - Main Dashboard
 struct MainContentView: View {
     var userLevel: String
+    let authService: AuthService
+    
+    init(userLevel: String) {
+        // Configure it to support Email/Password
+        let configuration = AuthConfiguration()
+        authService = AuthService(configuration: configuration)
+            .withEmailSignIn()
+            .withGoogleSignIn()
+        self.userLevel = userLevel
+    }
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    StreakView()
-                        .padding(.horizontal) // Add padding for better layout
-
+//                    StreakView()
+//                        .padding(.horizontal) // Add padding for better layout
+                    StreakCalendarView()
+                    
                     Divider()
                         .padding(.horizontal) // Add padding for better layout
                     
                     ContinueLearningCard(userLevel: userLevel)
                         .padding(.horizontal) // Add padding for better layout
+                    
+                    AuthPickerView {
+                        HStack {
+                            Button("Manage Account") { authService.isPresented = true }
+                            Button("Sign Out") { Task { try? await authService.signOut() } }
+                        }
+                    }
+                    .environment(authService)
                 }
                 .padding(.top)
             }
@@ -60,41 +81,6 @@ struct MainContentView: View {
         }
     }
 }
-
-// MARK: - Streak View
-//struct StreakView: View {
-//    var body: some View {
-//        VStack(alignment: .leading, spacing: 10) {
-//            Text("Your Streak")
-//                .font(.title2)
-//                .fontWeight(.semibold)
-//            
-//            HStack {
-//                Image(systemName: "flame.fill")
-//                    .font(.title)
-//                    .foregroundColor(.orange)
-//                
-//                Text("7 Days Streak") // Placeholder for dynamic streak
-//                    .font(.headline)
-//                    .fontWeight(.medium)
-//                
-//                Spacer()
-//                
-//                Button("View Details") {
-//                    // Action to navigate to streak details
-//                }
-//                .buttonStyle(.bordered)
-//            }
-//            .padding()
-//            .background(Color.orange.opacity(0.1))
-//            .cornerRadius(12)
-//            .overlay(
-//                RoundedRectangle(cornerRadius: 12)
-//                    .stroke(Color.orange.opacity(0.3), lineWidth: 1)
-//            )
-//        }
-//    }
-//}
 
 // MARK: - Continue Learning Card
 struct ContinueLearningCard: View {
@@ -194,5 +180,6 @@ struct LevelSelectionView: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }

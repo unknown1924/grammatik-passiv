@@ -31,5 +31,6 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
-        .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }

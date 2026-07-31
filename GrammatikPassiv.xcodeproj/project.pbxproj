@@ -6,13 +6,33 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4F89BEE73010044F00DB15AF /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEE63010044F00DB15AF /* FirebaseCore */; };
+		4F89BEED30100DAE00DB15AF /* FirebaseAuthSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEEC30100DAE00DB15AF /* FirebaseAuthSwiftUI */; };
+		4F89BEEF30100DAE00DB15AF /* FirebaseGoogleSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F89BEEE30100DAE00DB15AF /* FirebaseGoogleSwiftUI */; };
+		4FA452303012053F00DA212F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA4522F3012053F00DA212F /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4F37DC312F5AFA75004ED2AC /* GrammatikPassiv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrammatikPassiv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F89BFC9301151F700DB15AF /* Exceptions for "GrammatikPassiv" folder in "GrammatikPassiv" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4F37DC302F5AFA75004ED2AC /* GrammatikPassiv */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F37DC332F5AFA75004ED2AC /* GrammatikPassiv */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4F89BFC9301151F700DB15AF /* Exceptions for "GrammatikPassiv" folder in "GrammatikPassiv" target */,
+			);
 			path = GrammatikPassiv;
 			sourceTree = "<group>";
 		};
@@ -23,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F89BEE73010044F00DB15AF /* FirebaseCore in Frameworks */,
+				4FA452303012053F00DA212F /* FirebaseFirestore in Frameworks */,
+				4F89BEEF30100DAE00DB15AF /* FirebaseGoogleSwiftUI in Frameworks */,
+				4F89BEED30100DAE00DB15AF /* FirebaseAuthSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				4F37DC332F5AFA75004ED2AC /* GrammatikPassiv */,
+				4F89BEE53010044F00DB15AF /* Frameworks */,
 				4F37DC322F5AFA75004ED2AC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +68,13 @@
 				4F37DC312F5AFA75004ED2AC /* GrammatikPassiv.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4F89BEE53010044F00DB15AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +97,10 @@
 			);
 			name = GrammatikPassiv;
 			packageProductDependencies = (
+				4F89BEE63010044F00DB15AF /* FirebaseCore */,
+				4F89BEEC30100DAE00DB15AF /* FirebaseAuthSwiftUI */,
+				4F89BEEE30100DAE00DB15AF /* FirebaseGoogleSwiftUI */,
+				4FA4522F3012053F00DA212F /* FirebaseFirestore */,
 			);
 			productName = GrammatikPassiv;
 			productReference = 4F37DC312F5AFA75004ED2AC /* GrammatikPassiv.app */;
@@ -95,6 +131,8 @@
 			mainGroup = 4F37DC282F5AFA75004ED2AC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				4F89BEE43010034700DB15AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4F89BEEB30100DAE00DB15AF /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F37DC322F5AFA75004ED2AC /* Products */;
@@ -256,6 +294,7 @@
 				DEVELOPMENT_TEAM = 86TN24DRGD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GrammatikPassiv/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +327,7 @@
 				DEVELOPMENT_TEAM = 86TN24DRGD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GrammatikPassiv/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -332,6 +372,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4F89BEE43010034700DB15AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.16.0;
+			};
+		};
+		4F89BEEB30100DAE00DB15AF /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/FirebaseUI-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 16.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4F89BEE63010044F00DB15AF /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F89BEE43010034700DB15AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		4F89BEEC30100DAE00DB15AF /* FirebaseAuthSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F89BEEB30100DAE00DB15AF /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseAuthSwiftUI;
+		};
+		4F89BEEE30100DAE00DB15AF /* FirebaseGoogleSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F89BEEB30100DAE00DB15AF /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseGoogleSwiftUI;
+		};
+		4FA4522F3012053F00DA212F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F89BEE43010034700DB15AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F37DC292F5AFA75004ED2AC /* Project object */;
 }

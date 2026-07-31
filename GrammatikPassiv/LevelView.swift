@@ -45,5 +45,6 @@ struct LevelView: View {
 
 #Preview {
     LevelView()
-        .modelContainer(for: [LevelsModel.self, TopicModel.self, ExerciseModel.self, ExamModel.self])
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }

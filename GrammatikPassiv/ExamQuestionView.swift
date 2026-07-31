@@ -12,6 +12,7 @@ import SwiftData
 struct ExamQuestionView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
+    @Environment(ExerciseProgressManager.self) private var progressManager
     
     @State var currentTopicName: String = "Questions"
     @State var currentTopicId: Int = 0
@@ -372,9 +373,26 @@ struct ExamQuestionView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 60)
         .onAppear {
+            // update exercise progress in swiftdata
             if exercise.count >= 1 {
                 exercise[0].status = true
             }
+        }
+        .task {
+            // TODO: CLEAN UP
+            // update exercise progress in firestore
+            let updatedExercise = Exercise(id: exercise[0].id,
+                                           name: exercise[0].name,
+                                           status: exercise[0].status,
+                                           topicId: exercise[0].topicId)
+            
+            let daily = DailyActivity(id: 1, dateKey: "date", date: .now, completedQuizCount: 1, isFreezeUsed: false, createdAt: .now)
+            
+            // TODO: EDGE CASES HERE - FIX THIS
+            progressManager.updateExerciseProgress(exercise: updatedExercise)
+            progressManager.updateDailyActivityProgress(activity: daily)
+            DatabaseManager.recordActivity(context: context)
+            DatabaseManager.updateStreak(context: context, today: .now)
         }
     }
 
@@ -508,5 +526,6 @@ struct OptionCell: View {
     NavigationStack {
         ExamQuestionView(currentTopicId: 7)
     }
-    .modelContainer(for: [ExamModel.self])
+    .environment(ExerciseProgressManager())
+    .modelContainer(previewContainer)
 }
