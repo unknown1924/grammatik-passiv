@@ -7,8 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import FirebaseAuthSwiftUI
-import FirebaseGoogleSwiftUI
 
 struct HomeView: View {
     // Automatically persists the user's first-time state
@@ -18,7 +16,7 @@ struct HomeView: View {
     
     @Query(sort: [SortDescriptor(\LevelsModel.id)]) var levels: [LevelsModel]
                                                                                           
-    
+    // TODO: Refactor this
     var body: some View {
         VStack {
             let _ = print("HomeView ---- App storage \\(hasSelectedLevel)")
@@ -35,14 +33,8 @@ struct HomeView: View {
 // MARK: - Main Dashboard
 struct MainContentView: View {
     var userLevel: String
-    let authService: AuthService
     
     init(userLevel: String) {
-        // Configure it to support Email/Password
-        let configuration = AuthConfiguration()
-        authService = AuthService(configuration: configuration)
-            .withEmailSignIn()
-            .withGoogleSignIn()
         self.userLevel = userLevel
     }
     
@@ -50,6 +42,7 @@ struct MainContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
+                    // TODO: Remove StreakView()
 //                    StreakView()
 //                        .padding(.horizontal) // Add padding for better layout
                     StreakCalendarView()
@@ -59,16 +52,7 @@ struct MainContentView: View {
                     
                     ContinueLearningCard(userLevel: userLevel)
                         .padding(.horizontal) // Add padding for better layout
-                    
-                    AuthPickerView {
-                        HStack {
-                            Button("Manage Account") { authService.isPresented = true }
-                            Button("Sign Out") { Task { try? await authService.signOut() } }
-                        }
-                    }
-                    .environment(authService)
                 }
-                .padding(.top)
             }
             .navigationTitle("My Learning") // Changed title to be more general
             .navigationBarTitleDisplayMode(.large)

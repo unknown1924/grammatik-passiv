@@ -24,6 +24,10 @@ struct MainTabView: View {
             Tab("Search", systemImage: "magnifyingglass", role: .search) {
                 SearchView()
             }
+            
+            Tab("Profile", systemImage: "person") {
+                ProfileView()
+            }
         }
         .tabBarMinimizeBehavior(.onScrollDown)
     }
