@@ -12,6 +12,8 @@ import SwiftUI
 
 struct AuthenticationView: View {
     let authService: AuthService
+    @State var skipSignIn: Bool = false
+    
     init() {
         // Configure it to support Email/Password
         let configuration = AuthConfiguration()
@@ -30,10 +32,11 @@ struct AuthenticationView: View {
 
     var authenticatedContent: some View {
             VStack {
-                if authService.authenticationState == .authenticated {
+                if authService.authenticationState == .authenticated || skipSignIn {
                     MainTabView()
                 } else {
-                    Button("Sign In") { authService.isPresented = true }
+                    Button("Sign In / Sign up") { authService.isPresented = true }
+                    Button("Skip Sign In") { skipSignIn = true }
                 }
             }
             .onChange(of: authService.authenticationState) { _, newValue in
@@ -46,12 +49,6 @@ struct AuthenticationView: View {
 
 #Preview {
     AuthenticationView()
-        .modelContainer(
-            for: [
-                TopicModel.self,
-                LevelsModel.self,
-                ExerciseModel.self,
-                ExamModel.self,
-            ]
-        )
+        .environment(ExerciseProgressManager())
+        .modelContainer(previewContainer)
 }
