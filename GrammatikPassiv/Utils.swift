@@ -22,7 +22,7 @@ let previewContainer: ModelContainer = {
         ])
         
         // Run entirely in memory so it doesn't corrupt your actual database
-        let config = ModelConfiguration(isStoredInMemoryOnly: false)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         
         // Optional: You can seed dummy data right here so all previews have instant data

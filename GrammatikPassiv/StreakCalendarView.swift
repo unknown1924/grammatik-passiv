@@ -34,7 +34,7 @@ struct StreakCalendarView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
 
-            testView
+            summary
             
             monthHeader
 
@@ -114,36 +114,39 @@ struct StreakCalendarView: View {
         }
     }
     
-    private var testView: some View {
+    private var summary: some View {
         VStack {
             HStack {
                 
-                Text("current:")
+                Label("Current", systemImage: "bolt.circle")
                 Text(String(streakSummary.first?.currentStreak ?? 0))
                 
-                Text("longest:")
+                Spacer()
+                
+                Label("Longest", systemImage: "trophy.circle")
                 Text(String(streakSummary.first?.longestStreak ?? 0))
                 
-                Text("updated:")
-                Text(String(streakSummary.first?.updatedAt.formatted() ?? "Never"))
+//                Text("updated:")
+//                Text(String(streakSummary.first?.updatedAt.formatted() ?? "Never"))
             }
-            HStack {
-                TextField("enter date", text: $enteredDate)
-                Button("add") {
-                    guard let firstOfMonth = calendar.dateInterval(of: .month, for: .now)?.start else { return }
-                    context.insert(DailyActivityModel(date: calendar.date(byAdding: .day, value: (Int(enteredDate) ?? -1) - 1, to: firstOfMonth)!))
-                    do {
-                        try context.save()
-                    } catch {
-                        print(error)
-                    }
-                }
-                Button("reset") {
-                    try? context.delete(model: DailyActivityModel.self)
-                    try? context.delete(model: StreakSummaryModel.self)
-//                    try? context.save()
-                }
-            }
+            // TODO: Clean up
+//            HStack {
+//                TextField("enter date", text: $enteredDate)
+//                Button("add") {
+//                    guard let firstOfMonth = calendar.dateInterval(of: .month, for: .now)?.start else { return }
+//                    context.insert(DailyActivityModel(date: calendar.date(byAdding: .day, value: (Int(enteredDate) ?? -1) - 1, to: firstOfMonth)!))
+//                    do {
+//                        try context.save()
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//                Button("reset") {
+//                    try? context.delete(model: DailyActivityModel.self)
+//                    try? context.delete(model: StreakSummaryModel.self)
+////                    try? context.save()
+//                }
+//            }
         }
     }
 
